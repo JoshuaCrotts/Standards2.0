@@ -7,5 +7,5 @@ package com.joshuacrotts.standards;
  */
 public enum StandardID {
 
-	Player, Particle, Trail, Enemy, Wall, Obstacle, StandardGameObject, StandardButton, Interactor, Entity, Weapon, NPC, Large, Multi, Powerup, Block, Brick, NULL, Pipe;
+	Player, Particle, Trail, Enemy, Wall, Obstacle, StandardGameObject, StandardButton, Interactor, Entity, Weapon, NPC, Large, Multi, Powerup, Block, Brick, NULL, Pipe, Camera;
 }
