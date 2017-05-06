@@ -1,7 +1,7 @@
 package com.andrewmatzureff.input;
 
 import com.andrewmatzureff.commands.Command;
-import com.joshuacrotts.standards.StandardGameObject;
+import com.joshuacrotts.standards.*;
 
 /**
  * Command used for moving the player... or any SGO!
@@ -25,19 +25,24 @@ import com.joshuacrotts.standards.StandardGameObject;
 
 public class Movement extends Command{
 
-	public StandardGameObject player;
-	
-	public float deltaX;
-	public float deltaY;
-	
-	public Movement(StandardGameObject sgo, float deltax, float deltay){
-		this.player = sgo;
-		this.deltaX = deltax;
-		this.deltaY = deltay;
-	}
-	
-	public void execute(){
-		player.setVelX(player.getVelX() + this.deltaX);
-		player.setVelY(player.getVelY() + this.deltaY);
-	}
+    public StandardGameObject player;
+    public StandardAnimator animator;
+    
+    public float deltaX;
+    public float deltaY;
+    
+    public Movement(StandardGameObject sgo, StandardAnimator sa, float deltax, float deltay){
+        this.player = sgo;
+        this.animator = sa;
+        this.deltaX = deltax;
+        this.deltaY = deltay;
+    }
+    
+    public void execute(){
+        //System.out.println("Executing...");
+        if(animator != null)
+        	animator.animate();
+        player.setVelX(player.getVelX() + this.deltaX);
+        player.setVelY(player.getVelY() + this.deltaY);
+    }
 }

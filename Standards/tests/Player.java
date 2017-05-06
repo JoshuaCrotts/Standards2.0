@@ -30,10 +30,10 @@ public class Player extends StandardGameObject{
 		this.setWidth(70);
 		this.setHeight(70);
 		
-		this.left = new Movement(this, -3, 0);
-		this.right = new Movement(this, 3, 0);
-		this.up = new Movement(this, 0, -3);
-		this.down = new Movement(this, 0, 3);
+		this.left = new Movement(this,null, -3, 0);
+		this.right = new Movement(this,null, 3, 0);
+		this.up = new Movement(this,null, 0, -3);
+		this.down = new Movement(this,null, 0, 3);
 	
 		this.left.bind(g.getKeyboard(), KeyEvent.VK_A);
 		this.right.bind(g.getKeyboard(), KeyEvent.VK_D);

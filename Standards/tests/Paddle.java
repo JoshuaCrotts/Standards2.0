@@ -23,8 +23,8 @@ public class Paddle extends StandardGameObject{
 		this.width = 100;
 		this.height = 10;
 		
-		this.left = new Movement(this, -2, 0);
-		this.right = new Movement(this, 2, 0);
+		this.left = new Movement(this, null, -2, 0);
+		this.right = new Movement(this, null, 2, 0);
 		
 		this.left.bind(this.stdGame.getKeyboard(), KeyEvent.VK_A);
 		this.right.bind(this.stdGame.getKeyboard(), KeyEvent.VK_D);

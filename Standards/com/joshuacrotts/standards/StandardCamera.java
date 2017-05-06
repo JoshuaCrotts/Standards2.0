@@ -1,44 +1,35 @@
 package com.joshuacrotts.standards;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 /**
- * Write a description of class StandardCamera here.
+ * Write a description of class Camera0 here.
  * 
  * @author (Andrew Matzureff) 
- * @version (4/28/2017)
+ * @version (5/4/2017)
  */
 public class StandardCamera extends StandardGameObject
 {
-    public double snap = 1;
     public StandardGameObject subject;
-    public boolean active = true;
-    public StandardCamera(StandardGameObject sgo, double snap)
+    public double snap = 1;
+    public int vpw, vph;
+    public StandardCamera(StandardGameObject sgo, double snap, int vpw, int vph)
     {
-        super((int) sgo.x, (int) sgo.y, StandardID.Camera);
+        super(sgo.x, sgo.y, StandardID.Camera);
+        this.vpw = vpw >> 1;
+        this.vph = vph >> 1;
         this.subject = sgo;
         this.snap = snap;
     }
-    
     public void tick()
     {
-        this.x += (this.velX = (subject.velX - this.velX) * snap);
-        this.y += (this.velY = (subject.velY - this.velY) * snap);
+        //System.out.println("camera");
+        this.velX = (this.subject.x - this.x) * this.snap;
+        this.velY = (this.subject.y - this.y) * this.snap;
+        this.x += this.velX;// * this.snap;
+        this.y += this.velY;// * this.snap;
     }
-    
     public void render(Graphics2D g2)
     {
-        if(active)
-        {
-           // StandardDraw.DELTAX = -this.x;
-          //  StandardDraw.DELTAY = -this.y;
-            g2.translate(-this.x, -this.y);
-        }
+        g2.translate(-this.x + vpw, -this.y + vph);
     }
 }

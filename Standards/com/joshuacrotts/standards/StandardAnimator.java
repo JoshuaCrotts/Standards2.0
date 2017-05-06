@@ -1,5 +1,6 @@
 package com.joshuacrotts.standards;
 
+import com.andrewmatzureff.constants.C;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -14,83 +15,111 @@ import java.util.ArrayList;
  */
 public class StandardAnimator{
 
-	private ArrayList<BufferedImage> images;
+    private ArrayList<BufferedImage> images;
 
-	private double counter;
-	private long delay = 0;
-	private int frame = 0;
-	private StandardGameObject object;
+    private long counter = 0;
+    private long delay = 1;
+    private long frame = 0;
+    private long time = 0;
+    private StandardGameObject object;
 
-	//public static int attackCounter = 0;
+    //public static int attackCounter = 0;
 
-	private boolean animating = true;
+    private boolean animating = true;
 
-	public StandardAnimator(ArrayList<BufferedImage> images, long delay, StandardGameObject o){
-		this.images = images;
-		this.delay = delay;
-		this.object = o;
-	}
+    public StandardAnimator(ArrayList<BufferedImage> images, double delay, StandardGameObject o){
+        this.images = images;
+        this.delay = (long)(delay * C.NANO);
+        this.object = o;
+    }
 
-	/**
-	 * Method animates the list of BufferedImages.
-	 * 
-	 * By default it will animate.
-	 * If setAnimating(false), animation will terminate.
-	 */
-	public void animate(){
-		
-		if(!animating) return;
-		
-		if(this.animating){
-			for(int i = 0; i<images.size(); i++){
-				counter++;
-				if(counter > delay){			
-					object.setCurrentSprite(this.images.get(i));
-					counter = 0;
-				}
-			}
-		}
-	}
+    /**
+     * Method animates the list of BufferedImages.
+     * 
+     * By default it will animate.
+     * If setAnimating(false), animation will terminate.
+     */
+    public void animate(){//got it!
+        //System.out.println("Animating...");
+        long current = System.nanoTime();
+        long interval = current - time;
+        time = current;
+        if(interval - delay > 0)
+            counter = 0;
+        else
+            counter += interval;
+            frame = counter / delay;
+        object.setCurrentSprite(this.images.get((int)frame % images.size()));
+    }
+    
+    public void animate0(){//on the right path...
+        //System.out.println("Animating...");
+        long current = System.nanoTime();
+        long interval = current - time;
+        time = current;
+        //if(interval - delay > 0)
+            frame += (int)(interval / delay);
+        object.setCurrentSprite(this.images.get((int)frame % images.size()));
+    }
+    
+    public void animateOld(){//old old...
+        
+        if(!animating) return;
+        
+        for(int i = (int)frame; i<images.size(); i++){
+            counter++;
+            if(counter > delay){            
+                object.setCurrentSprite(this.images.get(i));
+                counter = 0;
+            }
+        }
+    }
 
-	public ArrayList<BufferedImage> getImages() {
-		return images;
-	}
+    public ArrayList<BufferedImage> getImages() {
+        return images;
+    }
 
-	public void setImages(ArrayList<BufferedImage> images) {
-		this.images = images;
-	}
+    public void setImages(ArrayList<BufferedImage> images) {
+        this.images = images;
+    }
+    
+    public void reset(){
+        this.counter = 0;
+        this.frame = 0;
+        object.setCurrentSprite(this.images.get(0));
+    }
 
-	public double getCounter() {
-		return counter;
-	}
+    public long getCounter() {
+        return counter;
+    }
 
-	public void setCounter(int counter) {
-		this.counter = counter;
-	}
+    public void setCounter(long counter) {
+        this.counter = counter;
+    }
 
-	public long getDelay() {
-		return delay;
-	}
+    public long getDelay() {
+        return delay;
+    }
 
-	public void setDelay(long delay) {
-		this.delay = delay;
-	}
+    public void setDelay(long delay) {
+        this.delay = delay;
+    }
 
-	public int getFrame() {
-		return frame;
-	}
+    public long getFrame() {
+        return frame;
+    }
 
-	public void setFrame(int frame) {
-		this.frame = frame;
-	}
+    public void setFrame(long frame) {
+        this.frame = frame;
+    }
 
-	public boolean isAnimating() {
-		return animating;
-	}
+    public boolean isAnimating() {
+        return animating;
+    }
 
-	public void setAnimating(boolean animating) {
-		this.animating = animating;
-		if(this.animating)
-			this.animate();
+    public void setAnimating(boolean animating) {
+        this.animating = animating;
+        if(this.animating)
+            this.animate();
 	}
 }

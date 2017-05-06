@@ -30,7 +30,7 @@ public class StandardParticleHandler extends StandardHandler
         //My source for the unsigned compare:
         //http://www.drmaciver.com/2008/08/unsigned-comparison-in-javascala/
         long death = (long)-1;
-        long time = System.nanoTime();
+        //long time = System.nanoTime();
         
         if(dead < MAX_PARTICLES)
         for(int i = dead; i < MAX_PARTICLES; i++){
@@ -52,7 +52,7 @@ public class StandardParticleHandler extends StandardHandler
                 {
                     StandardGameObject swap = entities.get(dead);
                     entities.set(i, swap);
-                    entities.set(dead++, particle);
+                    entities.set(dead++, null);
                 }
             //}
         }

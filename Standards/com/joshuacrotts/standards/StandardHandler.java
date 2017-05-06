@@ -19,8 +19,15 @@ import java.util.ArrayList;
  */
 public class StandardHandler {
 
-	protected ArrayList<StandardGameObject> entities;
-
+	public ArrayList<StandardGameObject> entities;
+	
+	public StandardCamera stdCamera;
+	
+	public StandardHandler(StandardCamera stdCamera){
+		this.entities = new ArrayList<StandardGameObject>();
+		
+		this.stdCamera = stdCamera;
+	}
 	public StandardHandler(){
 		this.entities = new ArrayList<StandardGameObject>();
 	}
@@ -39,20 +46,7 @@ public class StandardHandler {
 	 */
 	
 	public static void Handler(StandardHandler handler){
-		/**
-		 * We're forced to parse through the entire list 
-		 * because entities is not static; we can't simply do
-		 * handler.tick() in this case. It still runs at the
-		 * same speed as tick() though.
-		 */
-		for(int i = 0; i<handler.entities.size(); i++){
-			
-			StandardGameObject o = handler.entities.get(i);
-			
-			if(o != null)
-				o.tick();
-			
-		}
+		handler.tick();
 	}
 	
 	/**
@@ -80,12 +74,7 @@ public class StandardHandler {
 	 */
 	public void tick(){
 		for(int i = 0; i<entities.size(); i++){
-			
-			StandardGameObject o = this.entities.get(i);
-			
-			if(o != null)
-				o.tick();
-			
+			entities.get(i).tick();
 		}
 	}
 
@@ -107,6 +96,10 @@ public class StandardHandler {
 		}
 	}
 
+	/**
+	 * Adds a StandardGameObject to the handler's arraylist of SGOs
+	 * @param obj - valid SGO object
+	 */
 	public void addEntity(StandardGameObject obj){
 		entities.add(obj);
 	}
@@ -129,7 +122,7 @@ public class StandardHandler {
 	public void clearEntities(){
 		for(int i = 0; i<entities.size(); i++){
 
-			if(entities.get(i).getId() == StandardID.Player){
+			if(entities.get(i).getId() != StandardID.Player){
 				entities.remove(i);
 				i--;
 			}
@@ -157,67 +150,23 @@ public class StandardHandler {
 			}
 		}
 	}
-//	
-//	/**
-//	 * The reason we have to have the horizontalTest and verticalTest parameters
-//	 * in the x-range and y-range methods respectively, is because when we say
-//	 * it's true it will test one pixel further away, meaning that if I am
-//	 * testing vertically and I'm one pixel away from this object, I want the
-//	 * block to be out of the x-range as a potential vertical collision. This
-//	 * allows us to check if the blocks are within range without mistaking
-//	 * blocks too far away as close enough
-//	 * 
-//	 * @author Brandon Willis
-//	 */
-//
-//	public boolean sameX_Range(StandardGameObject obj1, StandardGameObject obj2, boolean horizontalTest) {
-//		double lowerBound = obj1.getX() + obj1.getVelX();
-//		double upperBound = lowerBound + obj1.getWidth() + obj1.getVelX();
-//
-//		// Expand range by one pixel
-//		if (horizontalTest) {
-//			lowerBound--;
-//			upperBound++;
-//		}
-//		if (lowerBound <= obj2.getX() + obj2.getVelX() && obj2.getX() + obj2.getVelX() <= upperBound) {
-//			return true;
-//		}
-//		if (lowerBound <= (obj2.getX() + obj2.getVelX() + obj2.getWidth())
-//				&& (obj2.getX() + obj2.getVelX() + obj2.getWidth()) <= upperBound) {
-//			return true;
-//		}
-//		if (obj2.getX() + obj2.getVelX() <= lowerBound
-//				&& obj2.getX() + obj2.getWidth() + obj2.getVelX() >= upperBound) {
-//			return true;
-//		}
-//
-//		return false;
-//	}
-//
-//	public boolean sameY_Range(StandardGameObject obj1, StandardGameObject obj2, boolean verticalTest) {
-//
-//		double lowerBound = obj1.getY();
-//		double upperBound = lowerBound + obj1.getHeight();
-//
-//		if (verticalTest) {
-//			lowerBound--;
-//			upperBound++;
-//		}
-//
-//		// 3 scenarios where they would have the same y range
-//		if (lowerBound <= obj2.getY() && obj2.getY() <= upperBound) {
-//			return true;
-//		}
-//		if (lowerBound <= (obj2.getY() + obj2.getHeight()) && (obj2.getY() + obj2.getHeight()) <= upperBound) {
-//			return true;
-//		}
-//		if (obj2.getY() <= lowerBound && obj2.getY() + obj2.getHeight() >= upperBound) {
-//			return true;
-//		}
-//
-//		return false;
-//	}
 
+	/**
+	 * Method takes in an object, and determines if it's the right enum.
+	 * @param obj2
+	 * @return
+	 */
+	private boolean validCollison(StandardGameObject obj2){
+		return ((obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick ||
+				obj2.getId() == StandardID.Obstacle || obj2.getId() == StandardID.NPC ||
+					obj2.getId() == StandardID.Powerup) && (obj2.getId() != StandardID.Player && 
+					obj2.getId() != StandardID.Enemy));
+	}
+	
+	public void checkCollisions(){
+		
+	}
+	
 	public int size(){
 		return this.entities.size();
 	}

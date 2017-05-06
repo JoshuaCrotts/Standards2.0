@@ -66,7 +66,7 @@ public abstract class StandardGame extends Canvas implements Runnable{
 		this.addMouseListener(mouse);
 		this.addMouseMotionListener(mouse);
 		this.addKeyListener(keyboard);
-
+		
 		Command.init();
 		
 		//this.start();

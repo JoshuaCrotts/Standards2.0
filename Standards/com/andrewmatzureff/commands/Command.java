@@ -129,6 +129,7 @@ public abstract class Command
      * @param key key to which this
      * Command will be bound.
      */
+    public boolean on(){return _On;}
     public void bind(InputDevice id, int key)
     {
         switch(key)
@@ -180,9 +181,9 @@ public abstract class Command
             else if(KEY_BINDS[i] == UNDEFINED)
             {
                 KEY_BINDS[i] = key | id.getDeviceMask();
-                System.out.println("KEY_BINDS[i] = "+KEY_BINDS[i]);
-                System.out.println("Device Mask = "+id.getDeviceMask());
-                System.out.println("Keyboard Mask = "+C.KEYBOARD_MASK);
+              //  System.out.println("KEY_BINDS[i] = "+KEY_BINDS[i]);
+              //  System.out.println("Device Mask = "+id.getDeviceMask());
+               // System.out.println("Keyboard Mask = "+C.KEYBOARD_MASK);
                 id.set(key, (this.index(true) << STATE_MASK));
                 return;
             }

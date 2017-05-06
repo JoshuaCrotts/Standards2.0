@@ -4,20 +4,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 /**
- * This is an abstract class that will be only used to draw certain things, retrieve special
+ * This is an abstract class that will be only used to draw certain things,  and retrieve special
  * colors that were created by me.
  * 
- * @author Joshua, Source For Colors: Wikipedia.
+ * @author Joshua
+ * <br><br>
+ * @author Source For Colors: Wikipedia.
+ * <br><br>
  * 
- * Shades of Red: https://en.wikipedia.org/wiki/Shades_of_red
- * Shades of Blue: https://en.wikipedia.org/wiki/Shades_of_blue 
- * Shades of Green: https://en.wikipedia.org/wiki/Shades_of_green
- * Shades of Yellow: https://en.wikipedia.org/wiki/Shades_of_yellow
- * Shades of Orange: https://en.wikipedia.org/wiki/Shades_of_orange
- * Shades of Violet: https://en.wikipedia.org/wiki/Shades_of_violet
+ * Shades of Red: https://en.wikipedia.org/wiki/Shades_of_red<br>
+ * Shades of Blue: https://en.wikipedia.org/wiki/Shades_of_blue<br>
+ * Shades of Green: https://en.wikipedia.org/wiki/Shades_of_green<br>
+ * Shades of Yellow: https://en.wikipedia.org/wiki/Shades_of_yellow<br>
+ * Shades of Orange: https://en.wikipedia.org/wiki/Shades_of_orange<br>
+ * Shades of Violet: https://en.wikipedia.org/wiki/Shades_of_violet<br>
  *
  */
 public abstract class StandardDraw {

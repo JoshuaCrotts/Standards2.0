@@ -15,13 +15,6 @@ import javax.imageio.ImageIO;
  * that can be modified either in an class that extends this or even modifying
  * this class.
  * 
- * One tip for keyboard input/any input is to make your Player class first
- * extend StandardGameObject, and then make that class implement KeyListener and
- * MouseListener, or any other listeners you would like for your player to
- * incorporate in the game. ***Then, create a StandardGame object, and call
- * .add...Listener, and pass it your newly made object that implements a
- * listener.***
- * 
  * One more tip: ADD THE OBJECT TO THE StandardHandler WITHIN THE CONSTRUCTOR OF
  * THAT OBJECT. Example:
  * 
@@ -46,6 +39,9 @@ public abstract class StandardGameObject {
 	public int width;
 	public int height;
 
+	public static double restitution = 0;
+	public static double gravity = 0;
+
 	private String fileLocation;
 
 	public BufferedImage currentSprite;
@@ -55,6 +51,9 @@ public abstract class StandardGameObject {
 	private boolean interactable = false;
 	public boolean alive = true;
 	public long death = 0;
+	
+	public boolean jumping = false;
+	public boolean falling = false;
 
 	public StandardID id;
 
@@ -220,7 +219,7 @@ public abstract class StandardGameObject {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
@@ -228,7 +227,7 @@ public abstract class StandardGameObject {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 
@@ -303,31 +302,46 @@ public abstract class StandardGameObject {
 	public void setAnimating(boolean bool) {
 
 	}
-
+	
 	public Rectangle getBounds() {
-		if (this.currentSprite != null)
-			return new Rectangle((int) this.getX(), (int) this.getY(), currentSprite.getWidth(),
-					currentSprite.getHeight());
-		else
-			return new Rectangle((int) this.getX(), (int) this.getY(), this.width, this.height);
+		return new Rectangle((int) x, (int) y, this.width, this.height);
 	}
 
 	public Rectangle getLeftBounds() {
-		return new Rectangle((int) x, (int) y, 6, height);
+		return new Rectangle((int) x, (int) y, 1, this.height);
 	}
 
 	public Rectangle getRightBounds() {
-		return new Rectangle((int) x + (width - 6), (int) y, 6, height);
+		return new Rectangle((int) x + this.width, (int) y, 1, this.height);
 	}
 
 	public Rectangle getTopBounds() {
-		return new Rectangle((int) x, (int) y, width, 8);
+		return new Rectangle((int) x, (int) y, this.width, 3);
 	}
 
 	public Rectangle getBottomBounds() {
-		return new Rectangle((int) this.getX(), (int) this.getY() + (this.getHeight() / 2), this.getWidth(),
-				this.getHeight() / 2);
+		return new Rectangle((int) x, (int) y + this.height, this.width, 1);
 	}
+	
+//	public Rectangle getBounds() {
+//		return (this.currentSprite != null) ? new Rectangle((int) x, (int) y, this.currentSprite.getWidth(), this.currentSprite.getHeight()) : new Rectangle((int) x, (int) y, this.width, this.height);
+//	}
+//
+//	public Rectangle getLeftBounds() {
+//		return (this.currentSprite != null) ? new Rectangle((int) x, (int) y, 1, this.currentSprite.getHeight()) : new Rectangle((int) x, (int) y, 1, this.height);
+//	}
+//
+//	public Rectangle getRightBounds() {
+//		return (this.currentSprite != null) ? new Rectangle((int) x + this.getWidth(), (int) y, 1, this.currentSprite.getHeight()) : new Rectangle((int) x + this.width, (int) y, 1, this.height);
+//	}
+//
+//	public Rectangle getTopBounds() {
+//		return (this.currentSprite != null) ? new Rectangle((int) x, (int) y, this.currentSprite.getWidth(), 3) : new Rectangle((int) x, (int) y, this.width, 3);
+//	}
+//
+//	public Rectangle getBottomBounds() {
+//		return (this.currentSprite != null) ? new Rectangle((int) x, (int) y + this.currentSprite.getHeight(), this.currentSprite.getWidth(), 1) : new Rectangle((int) x, (int) y + this.height, this.width, 1);
+//	}
 
 	public boolean alive() {
 		return alive;
@@ -343,6 +357,17 @@ public abstract class StandardGameObject {
 
 	public void setDeath(long death) {
 		this.death = death;
+	}
+
+	public double getRestitution() {
+		return restitution;
+	}
+	public double getGravity() {
+		return gravity;
+	}
+
+	public boolean isAlive() {
+		return alive;
 	}
 
 }
